@@ -57,6 +57,9 @@ there are 16 variables in the ames data set. the majority of the variables are c
 ```{r}
 max(ames$`Sale Price`, na.rm = FALSE)
 min(ames$`Sale Price`, na.rm = FALSE)
+IQR(ames$`Sale Price`, na.rm = FALSE)
+mean(ames$`Sale Price`,na.rm = FALSE)
+median(ames$`Sale Price`,na.rm = FALSE)
 ```
 ```{r}
 library("ggplot2")
@@ -75,7 +78,7 @@ ggplot(ames, aes(x = `Sale Price`, y = Bedrooms)) +
   geom_point()
 ```
 
-
+the histogram of
 
 =======
 *Question 4*
