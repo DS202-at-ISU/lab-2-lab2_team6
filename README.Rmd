@@ -130,6 +130,26 @@ ggplot(data = TotalLivingArea_extremeSlopeChange ) +
 ```
 The graph above tells me that the price per total living area in ft.^2 is higher around 0 - 1200, then after that the sales price goes down dramatically. Then the sales price flattens out around 2500 - 5000; then it starts to go back up again. The sales price per ft.^2 at the beginning is very high, its at its highest at around 750 ft.^2, then it has a dramatic drop around 1200 - 1500. This tells me there is a starting cost of a building that is automatically built into it or the supply and demand is very high, I would need more data to figure that out. The total living area from 1000 - 2000 sales price doesn't reach near a constant, it's constantly changing.  
 
+Brennan picked Style (sf)
+```{r}
+library(dplyr)
+
+ames <- ames %>%
+  mutate(Price_Range = cut(`Sale Price`,
+                           breaks = c(0, 50000, 100000, 150000, 200000, 300000, 400000, 500000, Inf),
+                           labels = c("0-50k", "50k-100k", "100k-150k", "150k-200k", "200k-300k", "300k-400k", "400k-500k", "500k+"),
+                           include.lowest = TRUE,
+                           ordered_result = TRUE))
+ames <- ames %>%
+  filter(!is.na(Style) & Style != "None")
+
+ggplot(ames, aes(x = Style, fill = Price_Range)) +
+  geom_bar(position = "stack", color = "black") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(y = "Number of Houses Sold", x = "Type of House", fill = "Sale Price Range")
+```
+
+The x-axis represents the different styles, while the y-axis represents the number of homes sold. Each bar on the graph represents a distinct style. The bars are divided or "stacked" into color-coded segments that represent different price ranges. The height of each individual segment within a bar corresponds to the number of houses of that specific style sold. Clearly, 0-50k was the most popular sale price. Additionally, one and two-story frame houses sold the most. And the most homes sold at 500k+ resided within the one-story frame house style.
 
 
 All submissions to the github repo will be automatically uploaded for grading once the due date is passed.
