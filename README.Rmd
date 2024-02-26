@@ -10,12 +10,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(classdata)
 str(ames)
+head(ames)
 
 print(range(ames$`Sale Price`))
 
 variable_range <- range(ames$`FinishedBsmtArea (sf)`, na.rm = TRUE)
 
-print(variable_range)
 
 ```
 
@@ -51,6 +51,34 @@ there are 16 variables in the ames data set. the majority of the variables are c
 
 
 2. some variabes of special interest would be sale price 
+
+
+
+*Question 4: Luke*
+```{r}
+load(classdata)
+load(ggplot2)
+max(ames$`FinishedBsmtArea (sf)`, na.rm = TRUE)
+min(ames$`FinishedBsmtArea (sf)`, na.rm = TRUE)
+
+ggplot(ames, aes(x = `FinishedBsmtArea (sf)`)) +
+  geom_histogram()
+
+
+ggplot(ames, aes(x = 'FinishedBsmtArea (sf)', y = 'Sale Price')) +
+  geom_point() +
+  labs(title = "Scatterplot of Finished Basement Area vs. Sale Price",
+       x = "Finished Basement Area (sf)",
+       y = "Sale Price") +
+  theme_minimal()
+
+
+
+
+```
+
+I pick FinishedBsmtArea (sf). Range is 6486. It is skewed right, with the mean centered around 800 sf. The relationship between Sale Price and FinishedBsmtArea is positive, with sale price rising as FinishedBsmtArea rises. There are no oddities.
+
 
 
 
