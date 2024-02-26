@@ -12,12 +12,9 @@ library(classdata)
 str(ames)
 head(ames)
 
-<<<<<<< HEAD
-=======
 print(range(ames$`Sale Price`))
 
 variable_range <- range(ames$`FinishedBsmtArea (sf)`, na.rm = TRUE)
->>>>>>> f675d2c948f07558e4445956faca4c70955c424e
 
 
 ```
@@ -55,21 +52,30 @@ there are 16 variables in the ames data set. the majority of the variables are c
 
 2. some variabes of special interest would be sale price 
 
-<<<<<<< HEAD
 *Question 4: Luke*
 ```{r}
 load(classdata)
-max(ames$`LotArea(sf)`, na.rm = TRUE)
-min(ames$`LotArea(sf)`, na.rm = TRUE)
+load(ggplot2)
+max(ames$`FinishedBsmtArea (sf)`, na.rm = TRUE)
+min(ames$`FinishedBsmtArea (sf)`, na.rm = TRUE)
 
-ggplot(ames, aes(x = 'LotArea(sf)')) +
-  geom_histogram(binwidth = 100, fill = "lightblue", color = "black", alpha = 0.7) +
-  labs(title = "Histogram of LotArea", x = "LotArea", y = "Frequency")
+ggplot(ames, aes(x = `FinishedBsmtArea (sf)`)) +
+  geom_histogram()
+
+
+ggplot(ames, aes(x = 'FinishedBsmtArea (sf)', y = 'Sale Price')) +
+  geom_point() +
+  labs(title = "Scatterplot of Finished Basement Area vs. Sale Price",
+       x = "Finished Basement Area (sf)",
+       y = "Sale Price") +
+  theme_minimal()
+
+
 
 
 ```
 
-I pick FinishedBsmtArea (sf).Range is 523228. 
+I pick FinishedBsmtArea (sf). Range is 6486. It is skewed right, with the mean centered around 800 sf. The relationship between Sale Price and FinishedBsmtArea is positive, with sale price rising as FinishedBsmtArea rises. There are no oddities.
 =======
 <<<<<<< HEAD
 
@@ -99,8 +105,6 @@ ggplot(ames, aes(x = `Sale Price`, y = Bedrooms)) +
 
 
 =======
-*Question 4*
-I pick FinishedBsmtArea (sf).
 >>>>>>> dd9653176060a42b64d9595d78bd65ab7748d950
 
 Follow the instructions posted at https://ds202-at-isu.github.io/labs.html for the lab assignment. The work is meant to be finished during the lab time, but you have time until Monday evening to polish things.
