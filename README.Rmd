@@ -78,7 +78,7 @@ ggplot(ames, aes(x = `Sale Price`, y = Bedrooms)) +
   geom_point()
 ```
 
-the histogram of
+the scatterplot of bedrooms and sale price shows the variation of price for each different number of bedrooms. 
 
 =======
 *Question 4*
