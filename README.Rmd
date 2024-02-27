@@ -10,10 +10,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(classdata)
 str(ames)
+head(ames)
 
-variable_range <- range(ames$FinishedBsmtArea (sf))
+print(range(ames$`Sale Price`))
 
-print(variable_range)
+variable_range <- range(ames$`FinishedBsmtArea (sf)`, na.rm = TRUE)
+
 
 ```
 
@@ -39,20 +41,7 @@ Fireplace; type chr, showing whether it has a fireplace or not
 Neighborhood; type Factor, showing what type of neighborhood it is located in
 
 
-
-Amanda 
-```{r}
-library("classdata")
-ames
-```
-there are 16 variables in the ames data set. the majority of the variables are characters. there are some variables that are dates or years, and there are also some numberical variables.
-
-
-2. some variabes of special interest would be sale price 
-
-<<<<<<< HEAD
-
-3
+3.
 
 ```{r}
 max(ames$`Sale Price`, na.rm = FALSE)
@@ -71,6 +60,45 @@ ggplot(ames, aes(x = `Sale Price`)) +
 ```
 
 
+Amanda 
+```{r}
+library("classdata")
+ames
+```
+there are 16 variables in the ames data set. the majority of the variables are characters. there are some variables that are dates or years, and there are also some numberical variables.
+
+
+2. some variabes of special interest would be sale price 
+
+
+
+*Question 4: Luke*
+```{r}
+
+max(ames$`FinishedBsmtArea (sf)`, na.rm = TRUE)
+min(ames$`FinishedBsmtArea (sf)`, na.rm = TRUE)
+
+ggplot(ames, aes(x = `FinishedBsmtArea (sf)`)) +
+  geom_histogram()
+
+
+ggplot(ames, aes(x = 'FinishedBsmtArea (sf)', y = 'Sale Price')) +
+  geom_point() +
+  labs(title = "Scatterplot of Finished Basement Area vs. Sale Price",
+       x = "Finished Basement Area (sf)",
+       y = "Sale Price") +
+  theme_minimal()
+
+
+
+
+```
+
+I pick FinishedBsmtArea (sf). Range is 6486. It is skewed right, with the mean centered around 800 sf. The relationship between Sale Price and FinishedBsmtArea is positive, with sale price rising as FinishedBsmtArea rises. There are no oddities.
+
+
+
+
 4. num of bedrooms compared to sales price
 
 ```{r}
@@ -80,7 +108,6 @@ ggplot(ames, aes(x = `Sale Price`, y = Bedrooms)) +
 
 the scatterplot of bedrooms and sale price shows the variation of price for each different number of bedrooms. 
 
-=======
 *Question 4*
 I pick FinishedBsmtArea (sf).
 
@@ -94,6 +121,47 @@ str(ames)
 ```
 
 
+Jackson picked TotalLivingArea (sf)
+
+```{r}
+Range_TotalLivingArea <- range(ames$`TotalLivingArea (sf)`, na.rm = TRUE)
+print(Range_TotalLivingArea)
+
+ggplot(data = ames) + 
+  geom_smooth(mapping = aes(x = `TotalLivingArea (sf)`, y = `Sale Price`, )) 
+
+TotalLivingArea_extremeSlopeChange <- subset(ames, `TotalLivingArea (sf)` >= 1000 & `TotalLivingArea (sf)` <= 2000)
+
+ggplot(data = TotalLivingArea_extremeSlopeChange ) + 
+  geom_smooth(mapping = aes(x = `TotalLivingArea (sf)`, y = `Sale Price`, )) 
+
+```
+The graph above tells me that the price per total living area in ft.^2 is higher around 0 - 1200, then after that the sales price goes down dramatically. Then the sales price flattens out around 2500 - 5000; then it starts to go back up again. The sales price per ft.^2 at the beginning is very high, its at its highest at around 750 ft.^2, then it has a dramatic drop around 1200 - 1500. This tells me there is a starting cost of a building that is automatically built into it or the supply and demand is very high, I would need more data to figure that out. The total living area from 1000 - 2000 sales price doesn't reach near a constant, it's constantly changing.
+
+
+Brennan picked Style (sf)
+```{r}
+library(dplyr)
+
+ames <- ames %>%
+  mutate(Price_Range = cut(`Sale Price`,
+                           breaks = c(0, 50000, 100000, 150000, 200000, 300000, 400000, 500000, Inf),
+                           labels = c("0-50k", "50k-100k", "100k-150k", "150k-200k", "200k-300k", "300k-400k", "400k-500k", "500k+"),
+                           include.lowest = TRUE,
+                           ordered_result = TRUE))
+ames <- ames %>%
+  filter(!is.na(Style) & Style != "None")
+
+ggplot(ames, aes(x = Style, fill = Price_Range)) +
+  geom_bar(position = "stack", color = "black") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(y = "Number of Houses Sold", x = "Type of House", fill = "Sale Price Range")
+```
+
+The x-axis represents the different styles, while the y-axis represents the number of homes sold. Each bar on the graph represents a distinct style. The bars are divided or "stacked" into color-coded segments that represent different price ranges. The height of each individual segment within a bar corresponds to the number of houses of that specific style sold. Clearly, 0-50k was the most popular sale price. Additionally, one and two-story frame houses sold the most. And the most homes sold at 500k+ resided within the one-story frame house style.
+
+
+
 All submissions to the github repo will be automatically uploaded for grading once the due date is passed.
 Submit a link to your repository on Canvas (only one submission per team) to signal to the instructors that you are done with your submission.
->>>>>>> 9ee19a35c49ba4e60f8824c826ddcb260a3d90a5
+
